@@ -1,0 +1,51 @@
+Titel: Luffarschack
+Författare: Rahim Ahmed
+Datum: 2021-04-29
+
+Jag ska skapa ett spel som heter Luffarschack.
+Det utgår på att 2 spelare möter varandra i en yta av 9 platser där X och O är spelare första personen som får 3 i rad eller kors vinner
+
+Deklarera variabler 
+    Antal spelare - 1 eller 2 spelare
+    Spelare 1 - Namn på spelare 1 = X
+    Spelare 2 - Namn på spelare 2 = O (ifall det är angivet med 2 spelare)
+    Vem börjar - Ange spelare som börjar
+
+Börja spelet
+
+    Bygg ett nytt spelplan
+    [][][]
+    [][][]
+    [][][]
+
+    Fråga spelare 1 om placering av X
+        Går det att placera i rutan?
+            Ja = placera X i vald ruta
+            Nej = Fråga igen om placering av X
+        Om det gick att placera gå då vidare och korrigera spelplanen.
+            Har du vunnit?
+                Nej
+                    Blev det jämt?
+                        Nej = byt spelare 
+                            Fråga spelare 2 om placering av O
+                                Går det att placera i rutan?
+                                    Ja = placera O i vald ruta
+                                    Nej = Fråga igen om placering av O
+                                Om det gick att placera gå då vidare och korrigera spelplanen.
+                        Ja
+                            Fråga användaren ifall de vill spela igen
+                            Ja
+                                Fråga vem som börjar
+                                    justera startspelare ifall det behövs
+                            Nej
+                                Visa resultat
+                Ja
+                    Ge poäng och visa resultat       
+                        Fråga användaren ifall de vill spela igen
+                        Ja
+                            Fråga vem som börjar
+                                justera startspelare ifall det behövs
+                        Nej
+                            Visa resultat
+
+            
