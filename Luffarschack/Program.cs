@@ -6,18 +6,33 @@ namespace Luffarschack
     {
         static void Main(string[] args)
         {
-            char[,] spelplan = new char[3,3];
-            spelplan[0, 0] = 'X';
-            spelplan[2, 2] = 'O'; 
+            char[,] spelplan = new char[3, 3];
             
-            for (int row = 0; row < 3; row++)
+            // initialisering av bordet
+
+            for (int rad = 0; rad < 3; rad++)
             {
                 for (int kolumn = 0; kolumn < 3; kolumn++)
                 {
-                    Console.Write("|   | X |   |");
+                    spelplan[rad, kolumn] = ' ';
+                }
+            }
+            spelplan[0, 0] = 'X';
+            spelplan[2, 2] = 'O'; 
+            
+            // Skriver ut bordet
+            for (int rad = 0; rad < 3; rad++)
+            {
+                Console.Write("| ");
+                for (int kolumn = 0; kolumn < 3; kolumn++)
+                {
+                    Console.Write(spelplan[rad, kolumn]);
+                    Console.Write(" | ");
                 }
                 Console.WriteLine();
             }
         }
+            
+
     }
 }
