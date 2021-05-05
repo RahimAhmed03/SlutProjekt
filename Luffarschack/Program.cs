@@ -6,7 +6,18 @@ namespace Luffarschack
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            char[,] spelplan = new char[3,3];
+            spelplan[0, 0] = 'X';
+            spelplan[2, 2] = 'O'; 
+            
+            for (int row = 0; row < 3; row++)
+            {
+                for (int kolumn = 0; kolumn < 3; kolumn++)
+                {
+                    Console.Write("|   | X |   |");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
