@@ -9,12 +9,9 @@ namespace Luffarschack
             char spelare = 'X';
             char[,] spelplan = new char[3, 3];
             initialisera(spelplan);
+            int antalDrag = 0;
 
-            spelplan[0, 0] = spelare;
-            spelare = 'O';
-            spelplan[2, 2] = spelare;
-            spelare = 'X';
-
+            // Spelet körs tills Vinst/Förlöst/Oavgjort
             while (true)
             {
                 Console.Clear();
@@ -27,21 +24,48 @@ namespace Luffarschack
 
                 spelplan[rad, kolumn] = spelare;
 
-                if (spelare == 'X')
+                // Kolla ifall vi vinner
+                if (spelare == spelplan[0,0] && spelare == spelplan[0,1] && spelare == spelplan[0,2])
                 {
-                    spelare = 'O';
+                    Console.WriteLine(spelare + " har vunnit spelet!");
+                    break;
                 }
-                else
+
+                antalDrag = antalDrag + 1;
+
+                if (antalDrag == 9)
                 {
-                    spelare = 'X';
+                    Console.WriteLine("DRAW");
+                    break;
+
                 }
+
+                spelare = Ändratur(spelare);
+
+
 
             }
 
         }
 
+        static char Ändratur(char nuvarandeSpelare)
+        {
+            if (nuvarandeSpelare == 'X')
+            {
+                return 'O';
+            }
+            else
+            {
+                return   'X';
+            }
+        }
+
+
+
+
+
         /// <summary>
-        /// initialisering av spelplanet
+        /// initialisering av spelplan
         /// </summary>
         /// <param name="spelplan"></param>
         static void initialisera(char[,] spelplan)
@@ -56,7 +80,7 @@ namespace Luffarschack
         }
 
         /// <summary>
-        /// Skriver ut spelplanet
+        /// Skriver ut spelplan
         /// </summary>
         /// <param name="spelplan"></param>
         static void skrivut(char[,] spelplan)
