@@ -17,6 +17,8 @@ namespace Luffarschack
             string menyVal = "0";
             while (menyVal != "4")
             {
+                initialisera(spelplan);
+
                 // Skriv ut huvudmenyn
                 Console.WriteLine("Välj ett alternativ");
                 Console.WriteLine("1. Spela Luffarschack");
@@ -36,9 +38,30 @@ namespace Luffarschack
                             skrivut(spelplan);
 
                             Console.Write(spelare + " Snälla ange en rad: ");
-                            int rad = int.Parse(Console.ReadLine());
+                            
+
+                            int rad;
+                            if (int.TryParse(Console.ReadLine(), out rad))
+                            {
+                                Console.WriteLine("Det funkade");
+                            }
+                            else
+                            {
+                                Console.WriteLine("försök igen");
+                            }
                             Console.Write(spelare + " Snälla ange en kolumn: ");
-                            int kolumn = int.Parse(Console.ReadLine());
+                           
+
+                            int kolumn;
+                            if (int.TryParse(Console.ReadLine(), out kolumn))
+                            {
+                                Console.WriteLine("Det funkade");
+                            }
+                            else
+                            {
+                                Console.WriteLine("försök igen");
+                            }
+
 
                             spelplan[rad, kolumn] = spelare;
 
@@ -46,7 +69,12 @@ namespace Luffarschack
                             if ((spelare == spelplan[0, 0] && spelare == spelplan[0, 1] && spelare == spelplan[0, 2]) ||
                             (spelare == spelplan[1, 0] && spelare == spelplan[1, 1] && spelare == spelplan[1, 2]) ||
                             (spelare == spelplan[2, 0] && spelare == spelplan[2, 1] && spelare == spelplan[2, 2]) ||
-                            (spelare == spelplan[0, 0] && spelare == spelplan[1, 0] && spelare == spelplan[2, 0]) )
+                            (spelare == spelplan[0, 0] && spelare == spelplan[1, 0] && spelare == spelplan[2, 0]) ||
+                            (spelare == spelplan[0, 1] && spelare == spelplan[1, 1] && spelare == spelplan[2, 1]) ||
+                            (spelare == spelplan[0, 2] && spelare == spelplan[1, 2] && spelare == spelplan[2, 2]) ||
+                            (spelare == spelplan[0, 0] && spelare == spelplan[1, 1] && spelare == spelplan[2, 2]) ||
+                            (spelare == spelplan[0, 2] && spelare == spelplan[1, 1] && spelare == spelplan[2, 0]))
+
                             {
                                 Console.WriteLine(spelare + " har vunnit spelet!");
                                 Console.WriteLine("Skriv in ditt namn");
