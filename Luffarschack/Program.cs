@@ -39,33 +39,26 @@ namespace Luffarschack
 
                             Console.Write(spelare + " Snälla ange en rad: ");
                             
-
+                            /// <summary>
+                            /// Ifall användaren inte skriver tal mellan 0-2 kommer det ett felmeddelande upp och användaren ska försöka igen
+                            /// </summary>
                             int rad;
-                            if (int.TryParse(Console.ReadLine(), out rad))
+                            while (!int.TryParse(Console.ReadLine(), out rad) || rad < 0 || rad > 2)
                             {
-                                Console.WriteLine("Det funkade");
+                                Console.WriteLine("Du skrev inte tal mellan 0-2 försök igen!");
                             }
-                            else
-                            {
-                                Console.WriteLine("försök igen");
-                            }
+
                             Console.Write(spelare + " Snälla ange en kolumn: ");
-                           
-
+                            
                             int kolumn;
-                            if (int.TryParse(Console.ReadLine(), out kolumn))
+                            while (!int.TryParse(Console.ReadLine(), out kolumn) || kolumn < 0 || kolumn > 2)
                             {
-                                Console.WriteLine("Det funkade");
+                                Console.WriteLine("Du skrev inte tal mellan 0-2 försök igen!");
                             }
-                            else
-                            {
-                                Console.WriteLine("försök igen");
-                            }
-
 
                             spelplan[rad, kolumn] = spelare;
 
-                            // Kolla ifall vi vinner
+                            // Kolla ifall användaren vinner
                             if ((spelare == spelplan[0, 0] && spelare == spelplan[0, 1] && spelare == spelplan[0, 2]) ||
                             (spelare == spelplan[1, 0] && spelare == spelplan[1, 1] && spelare == spelplan[1, 2]) ||
                             (spelare == spelplan[2, 0] && spelare == spelplan[2, 1] && spelare == spelplan[2, 2]) ||
@@ -76,6 +69,14 @@ namespace Luffarschack
                             (spelare == spelplan[0, 2] && spelare == spelplan[1, 1] && spelare == spelplan[2, 0]))
 
                             {
+                                // konsolen kommer bli clear och sista spelplanen skrivs ut och därefter kommer det en vinsttext och användaren blir frågad om att skriva in ens namn
+                                Console.Clear();
+                                skrivut(spelplan);
+                                Random rnd = new Random();
+                                string[] Vinst = {"Grattis för vinsten du förtjänar en paus", "Du är ju grym, Du borde gå med i proffs turnering", "Det är omöjligt du hackar!"};
+                                int slumpMässigNr = rnd.Next(0,3);
+                                string VinstText = Vinst[slumpMässigNr];
+                                Console.WriteLine(VinstText);
                                 Console.WriteLine(spelare + " har vunnit spelet!");
                                 Console.WriteLine("Skriv in ditt namn");
                                 senasteVinnaren = Console.ReadLine();
@@ -84,18 +85,26 @@ namespace Luffarschack
 
                             antalDrag = antalDrag + 1;
 
+                            // ifall det blir 9 drag så har det blivit oavgjort och då får de börja om ifall de vill
                             if (antalDrag == 9)
                             {
-                                Console.WriteLine("DRAW");
+                                Console.Clear();
+                                skrivut(spelplan);
+                                Console.WriteLine("Oavgjort");
                                 break;
 
                             }
-
+                            // tur ändras efter varje drag
                             spelare = Ändratur(spelare);
 
 
 
                         }
+                        /// <summary>
+                        /// spelare ändras ifall det inte har vunnit eller blivit oavgjort
+                        /// </summary>
+                        /// <param name="nuvarandeSpelare"></param>
+                        /// <returns> antingen returneras X eller O </returns>
                         static char Ändratur(char nuvarandeSpelare)
                         {
                             if (nuvarandeSpelare == 'X')
@@ -125,7 +134,8 @@ namespace Luffarschack
                     // Gör ingenting (programmet avslutas)
                     case "4":
                         break;
-
+                
+                    // ifall användaren inte väljer ett giltigt val så får de börja om
                     default:
                         Console.WriteLine("Du valde inte ett giltigt alternativ");
                         break;
