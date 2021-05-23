@@ -8,7 +8,7 @@ namespace Luffarschack
         {
             char spelare = 'X';
             char[,] spelplan = new char[3, 3];
-            initialisera(spelplan);
+            Initialisera(spelplan);
             int antalDrag = 0;
             string senasteVinnaren = "Ingen har vunnit än";
 
@@ -17,7 +17,7 @@ namespace Luffarschack
             string menyVal = "0";
             while (menyVal != "4")
             {
-                initialisera(spelplan);
+                Initialisera(spelplan);
 
                 // Skriv ut huvudmenyn
                 Console.WriteLine("Välj ett alternativ");
@@ -35,28 +35,8 @@ namespace Luffarschack
                         while (true)
                         {
                             Console.Clear();
-                            skrivut(spelplan);
-
-                            Console.Write(spelare + " Snälla ange en rad: ");
-                            
-                            /// <summary>
-                            /// Ifall användaren inte skriver tal mellan 0-2 kommer det ett felmeddelande upp och användaren ska försöka igen
-                            /// </summary>
-                            int rad;
-                            while (!int.TryParse(Console.ReadLine(), out rad) || rad < 0 || rad > 2)
-                            {
-                                Console.WriteLine("Du skrev inte tal mellan 0-2 försök igen!");
-                            }
-
-                            Console.Write(spelare + " Snälla ange en kolumn: ");
-                            
-                            int kolumn;
-                            while (!int.TryParse(Console.ReadLine(), out kolumn) || kolumn < 0 || kolumn > 2)
-                            {
-                                Console.WriteLine("Du skrev inte tal mellan 0-2 försök igen!");
-                            }
-
-                            spelplan[rad, kolumn] = spelare;
+                            SkrivUtSpelplan(spelplan);
+                            SpelarDrag(spelare, spelplan);
 
                             // Kolla ifall användaren vinner
                             if ((spelare == spelplan[0, 0] && spelare == spelplan[0, 1] && spelare == spelplan[0, 2]) ||
@@ -69,18 +49,19 @@ namespace Luffarschack
                             (spelare == spelplan[0, 2] && spelare == spelplan[1, 1] && spelare == spelplan[2, 0]))
 
                             {
-                                // konsolen kommer bli clear och sista spelplanen skrivs ut och därefter kommer det en vinsttext och användaren blir frågad om att skriva in ens namn
+                                // konsolen kommer bli rensad och sista spelplanen skrivs ut och därefter kommer det en vinsttext och användaren blir frågad om att skriva in ens namn
                                 Console.Clear();
-                                skrivut(spelplan);
+                                SkrivUtSpelplan(spelplan);
                                 Random rnd = new Random();
-                                string[] Vinst = {"Grattis för vinsten du förtjänar en paus", "Du är ju grym, Du borde gå med i proffs turnering", "Det är omöjligt du hackar!"};
-                                int slumpMässigNr = rnd.Next(0,3);
-                                string VinstText = Vinst[slumpMässigNr];
+                                string[] Vinst = { "Grattis för vinsten du förtjänar en paus", "Du är ju grym, Du borde gå med i proffs turnering", "Det är omöjligt du hackar!" };
+                                int slumpMässig = rnd.Next(0, 3);
+                                string VinstText = Vinst[slumpMässig];
                                 Console.WriteLine(VinstText);
                                 Console.WriteLine(spelare + " har vunnit spelet!");
                                 Console.WriteLine("Skriv in ditt namn");
                                 senasteVinnaren = Console.ReadLine();
                                 break;
+
                             }
 
                             antalDrag = antalDrag + 1;
@@ -89,52 +70,36 @@ namespace Luffarschack
                             if (antalDrag == 9)
                             {
                                 Console.Clear();
-                                skrivut(spelplan);
+                                SkrivUtSpelplan(spelplan);
                                 Console.WriteLine("Oavgjort");
                                 break;
 
                             }
                             // tur ändras efter varje drag
-                            spelare = Ändratur(spelare);
+                            spelare = ÄndraTur(spelare);
 
 
 
-                        }
-                        /// <summary>
-                        /// spelare ändras ifall det inte har vunnit eller blivit oavgjort
-                        /// </summary>
-                        /// <param name="nuvarandeSpelare"></param>
-                        /// <returns> antingen returneras X eller O </returns>
-                        static char Ändratur(char nuvarandeSpelare)
-                        {
-                            if (nuvarandeSpelare == 'X')
-                            {
-                                return 'O';
-                            }
-                            else
-                            {
-                                return 'X';
-                            }
                         }
                         break;
+
+
 
                     // Visa senaste vinnaren
                     case "2":
                         Console.WriteLine($"Senaste vinnaren: {senasteVinnaren}");
+                        /* Console.WriteLine($"Senaste vinnaren: {senasteVinnaren}"); */
                         break;
 
                     // Visa spelets regler
                     case "3":
-                        Console.WriteLine(" Tre-i-rad eller tripp trapp trull är en variant av luffarschack som spelas på en spelplan med endast 3*3 rutor, och syftet är sålunda att få tre lika i rad. ");
-                        Console.WriteLine(" Det är ett mycket lättspelat spel och är ett av världens populäraste brädspel som kan spelas på ett papper med en spelplan med nio rutor i en kvadrat. ");
-                        Console.WriteLine(" Spelet går ut på att ställa ut eller flytta sina tre markeringar (X eller O) så att man får tre i rad, antingen lodrätt, vågrätt, eller diagonalt. ");
-                        Console.WriteLine(" För att spelet ska bli klurigare kan man spela med tidsbegränsningar, till exempel 10 sekunder per drag. ");
+                        SkrivUtSpelregler();
                         break;
 
                     // Gör ingenting (programmet avslutas)
                     case "4":
                         break;
-                
+
                     // ifall användaren inte väljer ett giltigt val så får de börja om
                     default:
                         Console.WriteLine("Du valde inte ett giltigt alternativ");
@@ -147,7 +112,7 @@ namespace Luffarschack
             /// initialisering av spelplan
             /// </summary>
             /// <param name="spelplan"></param>
-            static void initialisera(char[,] spelplan)
+            static void Initialisera(char[,] spelplan)
             {
                 for (int rad = 0; rad < 3; rad++)
                 {
@@ -162,7 +127,7 @@ namespace Luffarschack
             /// Skriver ut spelplan
             /// </summary>
             /// <param name="spelplan"></param>
-            static void skrivut(char[,] spelplan)
+            static void SkrivUtSpelplan(char[,] spelplan)
             {
                 Console.WriteLine("  | 0 | 1 | 2 |  ");
                 for (int rad = 0; rad < 3; rad++)
@@ -176,6 +141,58 @@ namespace Luffarschack
                     Console.WriteLine();
                 }
             }
+            /// <summary>
+            /// spelare ändras ifall det inte har vunnit eller blivit oavgjort
+            /// </summary>
+            /// <param name="nuvarandeSpelare"></param>
+            /// <returns> antingen returneras X eller O </returns>
+            static char ÄndraTur(char nuvarandeSpelare)
+            {
+                if (nuvarandeSpelare == 'X')
+                {
+                    return 'O';
+                }
+                else
+                {
+                    return 'X';
+                }
+            }
+            static void SpelarDrag(char spelare, char[,] spelplan)
+            {
+                Console.Write(spelare + " Snälla ange en rad: ");
+
+                /// <summary>
+                /// Ifall användaren inte skriver tal mellan 0-2 kommer det ett felmeddelande upp och användaren ska försöka igen
+                /// </summary>
+                int rad;
+                while (!int.TryParse(Console.ReadLine(), out rad) || rad < 0 || rad > 2)
+                {
+                    Console.WriteLine("Du skrev inte tal mellan 0-2. Försök igen!");
+                }
+
+                Console.Write(spelare + " Snälla ange en kolumn: ");
+
+                int kolumn;
+                while (!int.TryParse(Console.ReadLine(), out kolumn) || kolumn < 0 || kolumn > 2)
+                {
+                    Console.WriteLine("Du skrev inte tal mellan 0-2 försök igen!");
+                }
+
+                spelplan[rad, kolumn] = spelare;
+
+
+
+
+            }
+
+            // Skriver ut spelreglerna för luffarschack
+            static void SkrivUtSpelregler()
+            {
+                Console.WriteLine(" Tre-i-rad eller tripp trapp trull är en variant av luffarschack som spelas på en spelplan med endast 3*3 rutor, och syftet är sålunda att få tre lika i rad. ");
+                Console.WriteLine(" Det är ett mycket lättspelat spel och är ett av världens populäraste brädspel som kan spelas på ett papper med en spelplan med nio rutor i en kvadrat. ");
+                Console.WriteLine(" Spelet går ut på att ställa ut sina tre markeringar (X eller O) så att man får tre i rad, antingen lodrätt, vågrätt, eller diagonalt. ");
+                Console.WriteLine(" För att spelet ska bli klurigare kan man spela med tidsbegränsningar, till exempel 10 sekunder per drag. ");
+            }
 
 
 
@@ -184,3 +201,4 @@ namespace Luffarschack
 
     }
 }
+
