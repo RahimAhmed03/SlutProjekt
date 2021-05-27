@@ -4,10 +4,18 @@ namespace Luffarschack
 {
     class Program
     {
+        
+         public static char[,] spelplan = new char[3, 3];
         static void Main(string[] args)
         {
+            Menu();
+        }
+
+        static void Menu()
+        {
+
+
             char spelare = 'X';
-            char[,] spelplan = new char[3, 3];
             Initialisera(spelplan);
             int antalDrag = 0;
             string senasteVinnaren = "Ingen har vunnit än";
@@ -107,7 +115,7 @@ namespace Luffarschack
 
                 }
             }
-
+        }
             /// <summary>
             /// initialisering av spelplan
             /// </summary>
@@ -157,13 +165,17 @@ namespace Luffarschack
                     return 'X';
                 }
             }
+            /// <summary>
+            /// Spelare frågas om en rad att välja sedan en kolumn och då placeras antingen X eller O
+            /// </summary>
+            /// <param name="spelare"></param>
+            /// <param name="spelplan"></param>
             static void SpelarDrag(char spelare, char[,] spelplan)
             {
+
+
                 Console.Write(spelare + " Snälla ange en rad: ");
 
-                /// <summary>
-                /// Ifall användaren inte skriver tal mellan 0-2 kommer det ett felmeddelande upp och användaren ska försöka igen
-                /// </summary>
                 int rad;
                 while (!int.TryParse(Console.ReadLine(), out rad) || rad < 0 || rad > 2)
                 {
@@ -178,10 +190,9 @@ namespace Luffarschack
                     Console.WriteLine("Du skrev inte tal mellan 0-2 försök igen!");
                 }
 
+
+
                 spelplan[rad, kolumn] = spelare;
-
-
-
 
             }
 
@@ -192,13 +203,8 @@ namespace Luffarschack
                 Console.WriteLine(" Det är ett mycket lättspelat spel och är ett av världens populäraste brädspel som kan spelas på ett papper med en spelplan med nio rutor i en kvadrat. ");
                 Console.WriteLine(" Spelet går ut på att ställa ut sina tre markeringar (X eller O) så att man får tre i rad, antingen lodrätt, vågrätt, eller diagonalt. ");
                 Console.WriteLine(" För att spelet ska bli klurigare kan man spela med tidsbegränsningar, till exempel 10 sekunder per drag. ");
+
             }
-
-
-
-
-        }
-
     }
 }
 
