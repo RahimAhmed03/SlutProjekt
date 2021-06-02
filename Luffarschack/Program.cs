@@ -140,10 +140,8 @@ namespace Luffarschack
             int ArrayIndex;
             while (!int.TryParse(Console.ReadLine(), out ArrayIndex) || ArrayIndex < 0 || ArrayIndex > 6)
             {
-                Console.WriteLine("Du skrev inte ett tal mellan 1-6- Försök igen!");
+                Console.WriteLine("Du skrev inte ett tal mellan 1-6. Försök igen!");
             }
-
-
             return array;
         }
         public static int ArrayIndex(int arrayIndex)
