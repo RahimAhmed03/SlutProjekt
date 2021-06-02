@@ -20,7 +20,7 @@ namespace Luffarschack
             int antalDrag = 0;
             string senasteVinnaren = "Ingen har vunnit än";
 
-            Console.WriteLine("Välkommen till Luffarschack och Gissa Pjäsen");
+            Console.WriteLine("Välkommen till Luffarschack och Välja Pjäsen");
 
             string menyVal = "0";
             while (menyVal != "5")
