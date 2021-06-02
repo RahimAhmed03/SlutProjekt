@@ -4,8 +4,8 @@ namespace Luffarschack
 {
     class Program
     {
-        
-         public static char[,] spelplan = new char[3, 3];
+
+        public static char[,] spelplan = new char[3, 3];
         static void Main(string[] args)
         {
             Menu();
@@ -20,19 +20,20 @@ namespace Luffarschack
             int antalDrag = 0;
             string senasteVinnaren = "Ingen har vunnit än";
 
-            Console.WriteLine("Välkommen till Luffarschack");
+            Console.WriteLine("Välkommen till Luffarschack och Gissa Pjäsen");
 
             string menyVal = "0";
-            while (menyVal != "4")
+            while (menyVal != "5")
             {
                 Initialisera(spelplan);
 
                 // Skriv ut huvudmenyn
                 Console.WriteLine("Välj ett alternativ");
                 Console.WriteLine("1. Spela Luffarschack");
-                Console.WriteLine("2. Visa senaste vinnaren");
-                Console.WriteLine("3. Spelets regler");
-                Console.WriteLine("4. Avsluta programmet");
+                Console.WriteLine("2. Välj Pjäsen");
+                Console.WriteLine("3. Visa senaste vinnaren");
+                Console.WriteLine("4. Spelets regler");
+                Console.WriteLine("5. Avsluta programmet");
                 menyVal = Console.ReadLine();
 
 
@@ -89,23 +90,31 @@ namespace Luffarschack
 
 
                         }
+
+
                         break;
+
+
+                    case "2":
+                        // Ställer fråga
+                        Fråga(pjäser);
+                        break;
+
 
 
 
                     // Visa senaste vinnaren
-                    case "2":
+                    case "3":
                         Console.WriteLine($"Senaste vinnaren: {senasteVinnaren}");
-                        /* Console.WriteLine($"Senaste vinnaren: {senasteVinnaren}"); */
                         break;
 
                     // Visa spelets regler
-                    case "3":
+                    case "4":
                         SkrivUtSpelregler();
                         break;
 
                     // Gör ingenting (programmet avslutas)
-                    case "4":
+                    case "5":
                         break;
 
                     // ifall användaren inte väljer ett giltigt val så får de börja om
@@ -116,95 +125,136 @@ namespace Luffarschack
                 }
             }
         }
-            /// <summary>
-            /// initialisering av spelplan
-            /// </summary>
-            /// <param name="spelplan"></param>
-            static void Initialisera(char[,] spelplan)
+
+        public static string[] pjäser = FåPjäser();
+        public static string[] Fråga(string[] array)
+        {
+            Console.WriteLine("Välj en av dessa pjäser");
+            // Loopar igenom Arrayen
+            for (int i = 0; i < pjäser.Length; i++)
             {
-                for (int rad = 0; rad < 3; rad++)
-                {
-                    for (int kolumn = 0; kolumn < 3; kolumn++)
-                    {
-                        spelplan[rad, kolumn] = ' ';
-                    }
-                }
+                Console.WriteLine(i + 1 + "." + pjäser[i]);
             }
 
-            /// <summary>
-            /// Skriver ut spelplan
-            /// </summary>
-            /// <param name="spelplan"></param>
-            static void SkrivUtSpelplan(char[,] spelplan)
+            // Gör svaret till en int som blir int arrayIndex
+            int ArrayIndex;
+            while (!int.TryParse(Console.ReadLine(), out ArrayIndex) || ArrayIndex < 0 || ArrayIndex > 6)
             {
-                Console.WriteLine("  | 0 | 1 | 2 |  ");
-                for (int rad = 0; rad < 3; rad++)
-                {
-                    Console.Write(rad + " | ");
-                    for (int kolumn = 0; kolumn < 3; kolumn++)
-                    {
-                        Console.Write(spelplan[rad, kolumn]);
-                        Console.Write(" | ");
-                    }
-                    Console.WriteLine();
-                }
-            }
-            /// <summary>
-            /// spelare ändras ifall det inte har vunnit eller blivit oavgjort
-            /// </summary>
-            /// <param name="nuvarandeSpelare"></param>
-            /// <returns> antingen returneras X eller O </returns>
-            static char ÄndraTur(char nuvarandeSpelare)
-            {
-                if (nuvarandeSpelare == 'X')
-                {
-                    return 'O';
-                }
-                else
-                {
-                    return 'X';
-                }
-            }
-            /// <summary>
-            /// Spelare frågas om en rad att välja sedan en kolumn och då placeras antingen X eller O
-            /// </summary>
-            /// <param name="spelare"></param>
-            /// <param name="spelplan"></param>
-            static void SpelarDrag(char spelare, char[,] spelplan)
-            {
-
-
-                Console.Write(spelare + " Snälla ange en rad: ");
-
-                int rad;
-                while (!int.TryParse(Console.ReadLine(), out rad) || rad < 0 || rad > 2)
-                {
-                    Console.WriteLine("Du skrev inte tal mellan 0-2. Försök igen!");
-                }
-
-                Console.Write(spelare + " Snälla ange en kolumn: ");
-
-                int kolumn;
-                while (!int.TryParse(Console.ReadLine(), out kolumn) || kolumn < 0 || kolumn > 2)
-                {
-                    Console.WriteLine("Du skrev inte tal mellan 0-2 försök igen!");
-                }
-
-
-
-                spelplan[rad, kolumn] = spelare;
-
+                Console.WriteLine("Du skrev inte ett tal mellan 1-6- Försök igen!");
             }
 
-            // Skriver ut spelreglerna för luffarschack
-            static void SkrivUtSpelregler()
-            {
-                Console.WriteLine(" Tre-i-rad eller tripp trapp trull är en variant av luffarschack som spelas på en spelplan med endast 3*3 rutor, och syftet är sålunda att få tre lika i rad. ");
-                Console.WriteLine(" Det är ett mycket lättspelat spel och är ett av världens populäraste brädspel som kan spelas på ett papper med en spelplan med nio rutor i en kvadrat. ");
-                Console.WriteLine(" Spelet går ut på att ställa ut sina tre markeringar (X eller O) så att man får tre i rad, antingen lodrätt, vågrätt, eller diagonalt. ");
-                Console.WriteLine(" För att spelet ska bli klurigare kan man spela med tidsbegränsningar, till exempel 10 sekunder per drag. ");
 
+            return array;
+        }
+        public static int ArrayIndex(int arrayIndex)
+        {
+            // Skriver ut vilken pjäs so användaren valde
+            string pjäs = pjäser[arrayIndex - 1];
+            Console.WriteLine($"Du har valt {pjäs}");
+            return arrayIndex;
+        }
+        static string[] FåPjäser()
+        {
+            // Returneras arrayen
+            return new[] { "Kung", "Dam", "Torn", "Löpare", "Springare", "Bonde" };
+        }
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// initialisering av spelplan
+        /// </summary>
+        /// <param name="spelplan"></param>
+        static void Initialisera(char[,] spelplan)
+        {
+            for (int rad = 0; rad < 3; rad++)
+            {
+                for (int kolumn = 0; kolumn < 3; kolumn++)
+                {
+                    spelplan[rad, kolumn] = ' ';
+                }
             }
+        }
+
+        /// <summary>
+        /// Skriver ut spelplan
+        /// </summary>
+        /// <param name="spelplan"></param>
+        static void SkrivUtSpelplan(char[,] spelplan)
+        {
+            Console.WriteLine("  | 0 | 1 | 2 |  ");
+            for (int rad = 0; rad < 3; rad++)
+            {
+                Console.Write(rad + " | ");
+                for (int kolumn = 0; kolumn < 3; kolumn++)
+                {
+                    Console.Write(spelplan[rad, kolumn]);
+                    Console.Write(" | ");
+                }
+                Console.WriteLine();
+            }
+        }
+        /// <summary>
+        /// spelare ändras ifall det inte har vunnit eller blivit oavgjort
+        /// </summary>
+        /// <param name="nuvarandeSpelare"></param>
+        /// <returns> antingen returneras X eller O </returns>
+        static char ÄndraTur(char nuvarandeSpelare)
+        {
+            if (nuvarandeSpelare == 'X')
+            {
+                return 'O';
+            }
+            else
+            {
+                return 'X';
+            }
+        }
+        /// <summary>
+        /// Spelare frågas om en rad att välja sedan en kolumn och då placeras antingen X eller O
+        /// </summary>
+        /// <param name="spelare"></param>
+        /// <param name="spelplan"></param>
+        static void SpelarDrag(char spelare, char[,] spelplan)
+        {
+
+
+            Console.Write(spelare + " Snälla ange en rad: ");
+
+            int rad;
+            while (!int.TryParse(Console.ReadLine(), out rad) || rad < 0 || rad > 2)
+            {
+                Console.WriteLine("Du skrev inte tal mellan 0-2. Försök igen!");
+            }
+
+            Console.Write(spelare + " Snälla ange en kolumn: ");
+
+            int kolumn;
+            while (!int.TryParse(Console.ReadLine(), out kolumn) || kolumn < 0 || kolumn > 2)
+            {
+                Console.WriteLine("Du skrev inte tal mellan 0-2 försök igen!");
+            }
+
+
+
+            spelplan[rad, kolumn] = spelare;
+
+        }
+
+        // Skriver ut spelreglerna för luffarschack
+        static void SkrivUtSpelregler()
+        {
+            Console.WriteLine(" Tre-i-rad eller tripp trapp trull är en variant av luffarschack som spelas på en spelplan med endast 3*3 rutor, och syftet är sålunda att få tre lika i rad. ");
+            Console.WriteLine(" Det är ett mycket lättspelat spel och är ett av världens populäraste brädspel som kan spelas på ett papper med en spelplan med nio rutor i en kvadrat. ");
+            Console.WriteLine(" Spelet går ut på att ställa ut sina tre markeringar (X eller O) så att man får tre i rad, antingen lodrätt, vågrätt, eller diagonalt. ");
+            Console.WriteLine(" För att spelet ska bli klurigare kan man spela med tidsbegränsningar, till exempel 10 sekunder per drag. ");
+
+        }
     }
 }
 
